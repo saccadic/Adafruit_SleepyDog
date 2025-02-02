@@ -14,3 +14,20 @@ Currently supports the following hardware:
 *  ESP32, ESP32-S2, ESP32-S3
 *  ESP8266 WITH CAVEAT: The software and hardware watchdog timers are fixed to specific
 intervals and not programmable. Notes about this are within the `utility/WatchdogESP8266.cpp` file.
+
+## 変更履歴 / Changelog
+
+### 最新の更新 (2025-02-02)
+#### 日本語:
+- **nRF サポートの更新:**
+  - `WatchdogNRF.cpp` の修正により、最新の Nordic SDK に対応しました。
+  - 廃止された `nrf_wdt_started()` を `NRF_WDT->RUNSTATUS` に置換し、ウォッチドッグタイマの状態確認を行うように変更しました。
+  - 定数 `NRF_WDT_BEHAVIOUR_RUN_SLEEP` を `NRF_WDT_BEHAVIOUR_RUN_SLEEP_MASK` に置換しました。
+  - Wio BG770A v1.0で動作を確認
+
+#### English:
+- **Updated nRF Support:**
+  - Updated `WatchdogNRF.cpp` to support the latest Nordic SDK.
+  - Replaced the deprecated `nrf_wdt_started()` with a check using `NRF_WDT->RUNSTATUS` to determine the watchdog timer status.
+  - Replaced the constant `NRF_WDT_BEHAVIOUR_RUN_SLEEP` with `NRF_WDT_BEHAVIOUR_RUN_SLEEP_MASK`.
+  - These changes enhance the reliability of the watchdog timer functionality on nRF devices.
