@@ -12,11 +12,15 @@ int WatchdogNRF::enable(int maxPeriodMS) {
 
   // cannot change wdt config register once it is started
   // return previous configured timeout
-  if (nrf_wdt_started(NRF_WDT))
-    return _wdto;
+  // if (nrf_wdt_started(NRF_WDT))
+  //   return _wdto;
+
+  if (NRF_WDT->RUNSTATUS) {
+    return -1;  // 既に起動済みの場合はエラーを返す
+  }
 
   // WDT run when CPU is sleep
-  nrf_wdt_behaviour_set(NRF_WDT, NRF_WDT_BEHAVIOUR_RUN_SLEEP);
+  nrf_wdt_behaviour_set(NRF_WDT, NRF_WDT_BEHAVIOUR_RUN_SLEEP_MASK);
   nrf_wdt_reload_value_set(NRF_WDT, (maxPeriodMS * 32768) / 1000);
 
   // use channel 0
